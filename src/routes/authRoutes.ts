@@ -6,7 +6,6 @@ const router = express.Router();
 router.post("/google", googleLogin);
 
 
-//dashboard route :create seperate router file later
 
 
 
