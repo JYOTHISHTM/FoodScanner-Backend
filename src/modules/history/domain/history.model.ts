@@ -9,6 +9,8 @@ export interface History {
   image?: string;
   score: number;
   createdAt: Date;
+  productId :string
+   productData: Object 
 }
 
 const historySchema = new mongoose.Schema({
@@ -17,7 +19,9 @@ const historySchema = new mongoose.Schema({
   brand: String,
   image: String,
   score: Number,
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  productId: { type: String, required: true },
+   productData: { type: Object },
 });
 
 export const HistoryModel = mongoose.model("History", historySchema);

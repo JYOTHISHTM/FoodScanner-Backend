@@ -1,8 +1,8 @@
 import { fetchProductFromAPI } from "../infrastructure/product.repository";
 import { HistoryService } from "../../history/application/history.service";
 
-export const getProductByBarcodeService = async (barcode: string) => {
-  const product = await fetchProductFromAPI(barcode);
+export const getProductByBarcodeService = async (productId: string, userId: string) => {
+  const product = await fetchProductFromAPI(productId);
   const historyService = new HistoryService();
 
   if (!product) {
@@ -37,12 +37,14 @@ export const getProductByBarcodeService = async (barcode: string) => {
   const score = calculateScore(data);
   const insights = getHealthInsights(data);
 
-   await historyService.saveScan({
-    userId: "demoUser", // replace with real user later
+  await historyService.saveScan({
+    userId: userId,
     name: data.name,
     brand: data.brand,
     image: data.image,
     score: score,
+    productId: productId,
+    productData: data
   });
 
   return { data, score, insights };

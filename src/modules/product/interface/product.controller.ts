@@ -6,9 +6,10 @@ export const getProductByBarcodeController = async (
     res: Response
 ) => {
     try {
-        const { barcode } = req.params as { barcode: string };
-
-        const result = await getProductByBarcodeService(barcode);
+        const { productId } = req.params as { productId: string };
+        const { userId } = req.query as { userId: string };
+        
+        const result = await getProductByBarcodeService(productId,userId);
 
         res.json(result);
     } catch (error) {

@@ -3,6 +3,6 @@ import { getProductByBarcodeController } from "./product.controller";
 
 const router = express.Router();
 
-router.get("/:barcode", getProductByBarcodeController);
+router.get("/:productId", getProductByBarcodeController);
 
 export default router;

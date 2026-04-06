@@ -6,7 +6,7 @@ const service = new HistoryService();
 
 export const getHistory = async (req: Request, res: Response) => {
   try {
-    const userId = "demoUser"; // replace with auth later
+     const { userId } = req.query as { userId: string };
     const result = await service.getHistory(userId, req.query);
     res.json(result);
   } catch {
