@@ -4,8 +4,8 @@ import { FavoriteService } from "../application/favorite.service";
 const service = new FavoriteService();
 
 export const toggleFavorite = async (req: Request, res: Response) => {
-  const { userId, productId  } = req.body;
-  const result = await service.toggle(userId, productId );
+  const { userId, productId } = req.body;
+  const result = await service.toggle(userId, productId);
   res.json(result);
 };
 
@@ -21,9 +21,6 @@ export const getFavorites = async (req: Request, res: Response) => {
 
 export const checkFavorite = async (req: Request, res: Response) => {
   const { userId, productId } = req.query;
-  console.log("user ",userId);
-  console.log("product ",productId);
-  
   const data = await service.check(userId as string, productId as string);
   res.json(data);
 };
