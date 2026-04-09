@@ -24,13 +24,13 @@ import { fetchProductFromAPI } from "../infrastructure/product.repository";
 import { HistoryService } from "../../history/application/history.service";
 
 export const getProductByBarcodeService = async (productId: string, userId: string) => {
-const product = (await fetchProductFromAPI(productId)) as Product;  const historyService = new HistoryService();
+  const product = (await fetchProductFromAPI(productId)) as Product; const historyService = new HistoryService();
 
   if (!product) {
     throw new Error("Product not found");
   }
 
-  
+
 
   const data = {
     name: product.product_name,
@@ -38,12 +38,12 @@ const product = (await fetchProductFromAPI(productId)) as Product;  const histor
     nutrition: product.nutriments,
     additives: product.additives_tags,
 
-    sugar: product.nutriments?.sugars,
-    fat: product.nutriments?.fat,
-    protein: product.nutriments?.proteins,
-    calories: product.nutriments?.["energy-kcal"],
+    sugar: product.nutriments?.sugars || 0,
+    fat: product.nutriments?.fat || 0,
+    protein: product.nutriments?.proteins || 0,
+    calories: product.nutriments?.["energy-kcal"] || 0,
+    nova: product.nutriments?.["nova-group"] || 0,
 
-    nova: product.nutriments?.["nova-group"],
     image: product.image_url,
 
     quantity: product.quantity,
@@ -51,10 +51,14 @@ const product = (await fetchProductFromAPI(productId)) as Product;  const histor
     brand: product.brands,
     packaging: product.packaging,
 
-    palmOil: product.ingredients_text?.toLowerCase().includes("palm"),
-    veg:
-      product.ingredients_analysis_tags?.includes("en:vegan") ||
-      product.ingredients_analysis_tags?.includes("en:vegetarian"),
+    palmOil: product.ingredients_text
+  ? product.ingredients_text.toLowerCase().includes("palm")
+  : false,
+
+veg: Array.isArray(product.ingredients_analysis_tags)
+  ? product.ingredients_analysis_tags.includes("en:vegan") ||
+    product.ingredients_analysis_tags.includes("en:vegetarian")
+  : false,
   };
 
   const score = calculateScore(data);
