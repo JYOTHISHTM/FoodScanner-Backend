@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 4000;
 
 connectDB();
 
-app.listen(PORT,async () => {
+app.listen(PORT, async () => {
   console.log(`server running on ${PORT}`);
   await seedAdmin()
 
