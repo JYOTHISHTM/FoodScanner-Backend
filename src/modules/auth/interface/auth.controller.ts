@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { googleLoginService } from "../application/auth.service";
-import { sendOtpService,verifyOtpService } from "../application/auth.service";
+import { sendOtpService, verifyOtpService } from "../application/auth.service";
 
 export const googleLoginController = async (req: Request, res: Response) => {
   try {
@@ -9,8 +9,8 @@ export const googleLoginController = async (req: Request, res: Response) => {
     const data = await googleLoginService(token);
 
     res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: "Google login failed" });
+  } catch (error:any) {
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -19,8 +19,8 @@ export const sendOtpController = async (req: Request, res: Response) => {
     const { email } = req.body;
     const data = await sendOtpService(email);
     res.json(data);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to send OTP" });
+  } catch (err: any) {
+    res.status(400).json({ message: err.message });
   }
 };
 
